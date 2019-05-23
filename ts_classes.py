@@ -8,13 +8,15 @@ class task:
 
         self.id = id
         self.inputs = []
+        self.output = None
         self.duration = duration
     
     def addInput(self, input):
         self.inputs.append(input)
 
     def addOutput(self, output):
-        self.output = output
+        if self.output is None:
+            self.output = output
         
 
 class dataUnit:
@@ -27,12 +29,53 @@ class dataUnit:
 
         self.id = id
         self.outputs = []
+        self.input = None
         self.size = size
 
     def addInput(self, input):
-        self.input = input
+        if self.input is None:
+            self.input = input
 
     def addOutput(self, output):
         self.outputs.append(output)
 
-print("done1")
+class taskGraph:
+    def __init__(self):
+        self.tasks = []
+        self.dataUnits = []
+
+    def addTasks(self, tasks):
+        if not isinstance(tasks, task):
+            self.tasks += tasks
+        else:
+            self.tasks.append(tasks)
+
+    def addDataUnits(self, dataUnits):
+        if not isinstance(dataUnits, dataUnit):
+            self.tasks += dataUnits
+        else:
+            self.tasks.append(dataUnits)
+
+class worker:
+    def __init__(self, noCores):
+        self.cores = noCores
+        self.cIdle = noCores
+        self.cRunning = 0
+
+class cluster:
+    def __init__(self):
+        self.workers = []
+
+    def addWorkers(self, workers):
+        if not isinstance(workers, worker):
+            self.workers += workers
+        else:
+            self.workers.append(workers)
+
+class scheduler:
+    def __init__(self, tGraph, clust):
+        self.tGraph = tGraph
+        self.clust = clust
+
+    def schedule(self):
+        return 0
